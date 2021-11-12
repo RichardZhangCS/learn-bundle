@@ -4,12 +4,13 @@ import { Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import testLogo from "../js-logo.jpg";
+import test2Logo from "../python-logo.png";
 function Main() {
   return (
     <section className="main">
       <Container className="py-5">
         <Row>
-          <Col md={4}>
+          <Col xs={12} lg={4}>
             <Categories></Categories>
           </Col>
           <Col className="d-flex justify-content-center flex-column">
@@ -28,17 +29,41 @@ function Main() {
                 </Button>
               </InputGroup>
             </Form>
-            <div>
-              <Card style={{ width: "18rem" }}>
+            <Row>
+              <Card style={{ width: "18rem" }} className="m-2">
                 <Card.Img variant="top" src={testLogo} />
                 <Card.Body>
                   <Card.Title>Javascript</Card.Title>
                   <Card.Text>My first programming language lmao</Card.Text>
                   <Badge>Beginner Friendly</Badge>
-                  <Badge bg="danger">Outdated</Badge>
+                  <Badge bg="danger" className="ms-1">
+                    Outdated
+                  </Badge>
                 </Card.Body>
               </Card>
-            </div>
+              <Card style={{ width: "18rem" }} className="m-2">
+                <Card.Img variant="top" src={test2Logo} />
+                <Card.Body>
+                  <Card.Title>Python</Card.Title>
+                  <Card.Text>A very cool language</Card.Text>
+                  <Badge>Beginner Friendly</Badge>
+                  <Badge bg="danger" className="ms-1">
+                    Outdated
+                  </Badge>
+                </Card.Body>
+              </Card>
+              <Card style={{ width: "18rem" }} className="m-2">
+                <Card.Img variant="top" src={testLogo} />
+                <Card.Body>
+                  <Card.Title>Javascript</Card.Title>
+                  <Card.Text>My first programming language lmao</Card.Text>
+                  <Badge>Beginner Friendly</Badge>
+                  <Badge bg="danger" className="ms-1">
+                    Outdated
+                  </Badge>
+                </Card.Body>
+              </Card>
+            </Row>
           </Col>
         </Row>
       </Container>
