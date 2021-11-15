@@ -11,8 +11,8 @@ function Preview() {
         </p>
         <Row className="px-5">
           <Col>
-            <Button variant="primary" className="float-end">
-              Explore a new skill
+            <Button variant="primary" className="float-end" href="/post/add">
+              Create a new post
             </Button>
           </Col>
           <Col>

@@ -34,3 +34,9 @@
   height: 250px;
   object-fit: cover;
 }
+
+.post-add-btn {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+}
