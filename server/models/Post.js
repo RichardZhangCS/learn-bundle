@@ -10,6 +10,10 @@ var PostSchema = new Schema({
   prereqs: { type: String, required: false },
   tags: [{ type: Schema.Types.ObjectId, required: false }],
   submission_date: { type: Date, required: true },
+  image: {
+    data: Buffer,
+    contentType: String,
+  },
 });
 
 PostSchema.virtual("submission_date_formatted").get(() => {
