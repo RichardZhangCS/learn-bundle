@@ -7,12 +7,24 @@ function PostForm() {
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
+    event.preventDefault();
+    console.log("whoa");
     if (form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
+    } else {
+      submitNewPost(form);
     }
 
     setValidated(true);
+  };
+
+  const submitNewPost = async (form) => {
+    var formData = new FormData(form);
+    const response = await fetch("http://localhost:9000/post/add", {
+      method: "POST",
+      body: formData,
+      /*credentials: "include",*/
+    });
   };
 
   return (
@@ -47,8 +59,8 @@ function PostForm() {
           <Form.Group className="py-2">
             <Form.Label>Prerequisties (optional but recommended)</Form.Label>
             <Form.Control
-              type="prereqs"
-              name="description"
+              type="text"
+              name="prereqs"
               defaultValue="None"
               placeholder="Enter necessary prerequisites here"
             />

@@ -12,7 +12,10 @@ var storage = multer.diskStorage({
   },
 });
 
-var upload = multer({ storage: storage });
+var upload = multer({
+  storage: storage,
+  limits: { fieldSize: 10 * 1024 * 1024 },
+});
 
 exports.post_add = [
   upload.single("image"),

@@ -9,6 +9,8 @@ var postRouter = require("./routes/posts");
 
 var app = express();
 
+var cors = require("cors");
+
 var mongoose = require("mongoose");
 var dev_db_url =
   "mongodb+srv://m001-student:m001-mongodb-basics@sandbox.czp9v.mongodb.net/tutorial-bundler?retryWrites=true&w=majority";
@@ -17,7 +19,8 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-// view engine setup
+app.use(cors());
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
