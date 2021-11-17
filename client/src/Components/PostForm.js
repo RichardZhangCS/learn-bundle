@@ -25,6 +25,9 @@ function PostForm() {
       body: formData,
       /*credentials: "include",*/
     });
+    if (response.status == 200) {
+      window.location.assign("/");
+    }
   };
 
   return (

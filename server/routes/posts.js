@@ -1,11 +1,16 @@
 var express = require("express");
 const PostController = require("../controllers/PostController");
+const Post = require("../models/Post");
 var router = express.Router();
 
 router.post("/add", PostController.post_add);
 
-router.get("/", (req, res, next) => {
-  res.send("Successfully called the post router");
+router.get("/all", async (req, res, next) => {
+  var results = await Post.find({}).lean();
+  for (var post of results) {
+    post.image.dataBase64Encoded = post.image.data.toString("base64");
+  }
+  res.send(results);
 });
 
 module.exports = router;
