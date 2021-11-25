@@ -4,20 +4,20 @@ import { Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Spinner } from "react-bootstrap";
-import testLogo from "../js-logo.jpg";
-import test2Logo from "../python-logo.png";
 import { useState, useEffect } from "react";
 function Main() {
   const [posts, setPosts] = useState(null);
 
-  const getPostsFromApi = async () => {
-    let res = await fetch("http://localhost:9000/post/all");
-    let json = await res.json();
-    console.log(json);
-    setPosts(json);
-  };
-
-  useEffect(async () => {
+  useEffect(() => {
+    const getPostsFromApi = async () => {
+      try {
+        let res = await fetch("http://localhost:9000/post/all");
+        let json = await res.json();
+        setPosts(json);
+      } catch (e) {
+        setPosts([]);
+      }
+    };
     getPostsFromApi();
   }, []);
 
@@ -46,8 +46,13 @@ function Main() {
             </Form>
             <Row>
               {!posts ? (
-                <Spinner animation="border" />
-              ) : (
+                <div className="spinner-container">
+                  <Spinner
+                    className="post-loading-spinner"
+                    animation="border"
+                  />
+                </div>
+              ) : posts.length != 0 ? (
                 posts.map((post, index) => (
                   <Card key={index} style={{ width: "18rem" }} className="m-2">
                     <Card.Img
@@ -64,6 +69,10 @@ function Main() {
                     </Card.Body>
                   </Card>
                 ))
+              ) : (
+                <p className="lead">
+                  Seems like the database is sleepy today :(
+                </p>
               )}
             </Row>
           </Col>
