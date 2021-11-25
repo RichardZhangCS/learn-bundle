@@ -43,3 +43,31 @@ exports.post_add = [
     });
   },
 ];
+
+exports.post_update = [
+  upload.single("image"),
+  async (req, res, next) => {
+    var newPost = new Post({
+      _id: req.body.id,
+      title: req.body.title,
+      user: req.body.user,
+      description: req.body.description,
+      prereqs: req.body.prereqs,
+      tags: req.body.tags,
+      submission_date: Date.now(),
+      image: {
+        data: fs.readFileSync(
+          path.join(__dirname, "..", "uploads", req.file.filename)
+        ),
+        contentType: req.file.mimetype,
+      },
+    });
+
+    var result = await Post.findByIdAndUpdate(req.body.id, newPost, {});
+    if (result) {
+      res.send("Post found and updated");
+    } else {
+      res.status(404).send("Post not found");
+    }
+  },
+];
