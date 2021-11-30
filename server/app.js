@@ -8,7 +8,8 @@ const session = require("express-session");
 var passport = require("passport");
 var crypto = require("crypto");
 var LocalStrategy = require("passport-local").Strategy;
-const MongoStore = require("connect-mongo")(session);
+const ConnectMongo = require("connect-mongo");
+const MongoStore = new ConnectMongo(session);
 
 var indexRouter = require("./routes/index");
 var postRouter = require("./routes/posts");
@@ -76,10 +77,6 @@ app.use(
     secret: "cats",
     resave: false,
     saveUninitialized: true,
-    store: sessionStore,
-    cookie: {
-      maxAge: 1000 * 30,
-    },
   })
 );
 

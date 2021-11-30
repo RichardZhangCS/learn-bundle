@@ -16,7 +16,11 @@ function Preview() {
             </Button>
           </Col>
           <Col>
-            <Button variant="secondary" className="float-start">
+            <Button
+              variant="secondary"
+              className="float-start"
+              href="/register"
+            >
               Create an account
             </Button>
           </Col>

@@ -12,7 +12,7 @@ function Header() {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="ms-auto">
                 <Nav.Link href="/">Account</Nav.Link>
-                <Nav.Link href="/">Sign up</Nav.Link>
+                <Nav.Link href="/register">Register</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>
