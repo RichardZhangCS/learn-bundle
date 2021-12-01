@@ -11,7 +11,10 @@ function Main() {
   useEffect(() => {
     const getPostsFromApi = async () => {
       try {
-        let res = await fetch("http://localhost:9000/post/all");
+        let res = await fetch("http://localhost:9000/post/all", {
+          credentials: "include",
+          withCredentials: true,
+        });
         let json = await res.json();
         setPosts(json);
       } catch (e) {

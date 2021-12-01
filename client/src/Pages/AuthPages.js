@@ -19,7 +19,9 @@ function Register() {
       body: new URLSearchParams(new FormData(form)),
       credentials: "include",
     });
-    //window.location = "/";
+    if (res.status == 200) {
+      window.location = "/";
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -100,15 +102,18 @@ function Register() {
 function SignIn(props) {
   const [validated, setValidated] = useState(false);
 
-  const route = "";
+  const route = "/signin";
   const signInIntoAPI = async (form) => {
     const data = new URLSearchParams(new FormData(form));
     const res = await fetch(route, {
       method: "POST",
       body: new URLSearchParams(new FormData(form)),
       credentials: "include",
+      withCredentials: true,
     });
-    window.location = "/";
+    if (res.status == 200) {
+      window.location = "/";
+    }
   };
 
   const handleSubmit = (event) => {

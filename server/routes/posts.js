@@ -6,6 +6,7 @@ var router = express.Router();
 router.post("/add", PostController.post_add);
 
 router.get("/all", async (req, res, next) => {
+  console.log(req.isAuthenticated());
   var results = await Post.find({}).lean();
   for (var post of results) {
     post.image.dataBase64Encoded = post.image.data.toString("base64");
