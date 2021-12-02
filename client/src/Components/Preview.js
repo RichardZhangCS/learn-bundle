@@ -10,14 +10,16 @@ function Preview() {
       <Container className="preview-container text-light text-center py-3">
         <h2>
           {user
-            ? "Hello " + user.username
+            ? "Hello " + user.username + "!"
             : "Explore through the best online tutorials"}
         </h2>
         <p className="lead">
           Find the best tutorials tailored towards your needs for any skill
         </p>
         <p className="lead">
-          Create an account to share an online tutorial with others
+          {user
+            ? "Create a new post to share outside online tutorials"
+            : "Create an account to share an online tutorial with others"}
         </p>
         <Row className="px-5">
           <Col>
