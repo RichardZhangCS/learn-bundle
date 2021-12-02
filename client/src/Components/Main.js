@@ -4,9 +4,11 @@ import { Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Spinner } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import UserContext from "../util/UserContext";
 function Main() {
   const [posts, setPosts] = useState(null);
+  const [user, setUser] = useContext(UserContext);
 
   useEffect(() => {
     const getPostsFromApi = async () => {

@@ -12,11 +12,11 @@ function Register() {
 
   const route = "/register";
 
-  const signInIntoAPI = async (form) => {
+  const registerIntoAPI = async (form) => {
     const data = new URLSearchParams(new FormData(form));
     const res = await fetch(route, {
       method: "POST",
-      body: new URLSearchParams(new FormData(form)),
+      body: data,
       credentials: "include",
     });
     if (res.status == 200) {
@@ -29,7 +29,7 @@ function Register() {
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
-      signInIntoAPI(form);
+      registerIntoAPI(form);
     }
     event.preventDefault();
     setValidated(true);
@@ -107,7 +107,7 @@ function SignIn(props) {
     const data = new URLSearchParams(new FormData(form));
     const res = await fetch(route, {
       method: "POST",
-      body: new URLSearchParams(new FormData(form)),
+      body: data,
       credentials: "include",
       withCredentials: true,
     });

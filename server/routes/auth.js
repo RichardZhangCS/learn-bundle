@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const genPassword = require("../lib/passwordUtils").genPassword;
 const passport = require("passport");
+const User = require("../models/User");
 
 router.post(
   "/register",
@@ -26,21 +27,9 @@ router.post(
         return;
       });
   },
-  function (req, res, next) {
-    passport.authenticate("local", function (err, user, info) {
-      if (err) {
-        return next(err);
-      }
-      if (!user) {
-        return res.redirect("/login");
-      }
-      req.logIn(user, function (err) {
-        if (err) {
-          return next(err);
-        }
-        return res.sendStatus(200);
-      });
-    })(req, res, next);
+  passport.authenticate("local"),
+  function (req, res) {
+    res.sendStatus(200);
   }
 );
 
@@ -48,12 +37,17 @@ router.post("/signin", passport.authenticate("local"), function (req, res) {
   res.sendStatus(200);
 });
 
-router.get("/isAuthenticated", (req, res) => {
+router.get("/currentUser", (req, res) => {
   if (req.isAuthenticated()) {
-    res.send("Is Authenticated");
+    res.json(req.user);
   } else {
-    res.send("Is Not Authenticated");
+    res.json({});
   }
+});
+
+router.get("/signout", (req, res) => {
+  req.logout();
+  res.sendStatus("200");
 });
 
 module.exports = router;

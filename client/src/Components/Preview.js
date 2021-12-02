@@ -1,27 +1,42 @@
 import { Button } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
+import { useContext } from "react";
+import UserContext from "./../util/UserContext";
 
 function Preview() {
+  const [user, setUser] = useContext(UserContext);
   return (
     <section id="preview">
       <Container className="preview-container text-light text-center py-3">
-        <h2>Explore through the best online tutorials</h2>
+        <h2>
+          {user
+            ? "Hello " + user.username
+            : "Explore through the best online tutorials"}
+        </h2>
         <p className="lead">
           Find the best tutorials tailored towards your needs for any skill
         </p>
+        <p className="lead">
+          Create an account to share an online tutorial with others
+        </p>
         <Row className="px-5">
           <Col>
-            <Button variant="primary" className="float-end" href="/post/add">
-              Create a new post
+            <Button
+              variant="primary"
+              className="static-button float-end w-50"
+              href={user ? "/post/add" : "/register"}
+            >
+              {user ? "Create a New Post" : "Register"}
             </Button>
           </Col>
+
           <Col>
             <Button
               variant="secondary"
-              className="float-start"
-              href="/register"
+              className="static-button float-start w-50"
+              href={user ? "/accountSettings" : "/signin"}
             >
-              Create an account
+              {user ? "Account Settings" : "Sign In"}
             </Button>
           </Col>
         </Row>
