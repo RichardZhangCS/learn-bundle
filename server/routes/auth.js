@@ -39,7 +39,7 @@ router.post("/signin", passport.authenticate("local"), function (req, res) {
 
 router.get("/currentUser", (req, res) => {
   if (req.isAuthenticated()) {
-    res.json(req.user);
+    res.send(req.user);
   } else {
     res.json({});
   }

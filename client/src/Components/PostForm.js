@@ -8,7 +8,6 @@ function PostForm() {
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     event.preventDefault();
-    console.log("whoa");
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
@@ -20,10 +19,10 @@ function PostForm() {
 
   const submitNewPost = async (form) => {
     var formData = new FormData(form);
-    const response = await fetch("http://localhost:9000/post/add", {
+    const response = await fetch("/post/add", {
       method: "POST",
       body: formData,
-      /*credentials: "include",*/
+      credentials: "include",
     });
     if (response.status == 200) {
       window.location.assign("/");

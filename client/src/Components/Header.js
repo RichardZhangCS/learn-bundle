@@ -14,6 +14,8 @@ function Header() {
       if (signOutResult.status == 200) {
         window.location = "/signin";
       }
+    } else {
+      window.location = "/register";
     }
   };
 
@@ -26,7 +28,9 @@ function Header() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="ms-auto">
-                <Nav.Link href="/">Account</Nav.Link>
+                <Nav.Link href={user ? "/account" : "/signin"}>
+                  {user ? "Account" : "Sign In"}
+                </Nav.Link>
                 <Nav.Link onClick={handleClick.bind(this)}>
                   {user ? "Sign Out" : "Register"}
                 </Nav.Link>

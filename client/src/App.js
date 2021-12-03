@@ -21,6 +21,7 @@ function App() {
         credentials: "include",
       });
       const userJson = await userFromApi.json();
+      console.log(userJson);
       if (userJson.username) {
         setUser(userJson);
       } else {

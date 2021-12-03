@@ -33,6 +33,7 @@ exports.post_add = [
         ),
         contentType: req.file.mimetype,
       },
+      user: req.user,
     });
     newPost.save((err) => {
       if (err) {

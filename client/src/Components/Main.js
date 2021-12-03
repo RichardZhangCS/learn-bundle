@@ -6,6 +6,7 @@ import { Container } from "react-bootstrap";
 import { Spinner } from "react-bootstrap";
 import { useState, useEffect, useContext } from "react";
 import UserContext from "../util/UserContext";
+import PostCard from "./PostCard";
 function Main() {
   const [posts, setPosts] = useState(null);
   const [user, setUser] = useContext(UserContext);
@@ -59,20 +60,7 @@ function Main() {
                 </div>
               ) : posts.length != 0 ? (
                 posts.map((post, index) => (
-                  <Card key={index} style={{ width: "18rem" }} className="m-2">
-                    <Card.Img
-                      variant="top"
-                      src={`data:image/${post.image.contentType};base64,${post.image.dataBase64Encoded}`}
-                    />
-                    <Card.Body>
-                      <Card.Title>{post.title}</Card.Title>
-                      <Card.Text>{post.description}</Card.Text>
-                      <Badge>Beginner Friendly</Badge>
-                      <Badge bg="danger" className="ms-1">
-                        Outdated
-                      </Badge>
-                    </Card.Body>
-                  </Card>
+                  <PostCard post={post} index={index}></PostCard>
                 ))
               ) : (
                 <p className="lead">
