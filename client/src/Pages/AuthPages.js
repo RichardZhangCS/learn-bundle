@@ -9,12 +9,12 @@ function Register() {
     selectAns: 0,
   });
   const [validated, setValidated] = useState(false);
-  const [registerFailure, setRegisterFailure] = useState(false);
+  const [registerMessage, setRegisterMessage] = useState(null);
 
   const route = "/register";
 
   const registerIntoAPI = async (form) => {
-    setRegisterFailure(false);
+    setRegisterMessage(null);
     const data = new URLSearchParams(new FormData(form));
     const res = await fetch(route, {
       method: "POST",
@@ -24,7 +24,8 @@ function Register() {
     if (res.status == 200) {
       window.location = "/";
     } else {
-      setRegisterFailure(true);
+      const message = await res.text();
+      setRegisterMessage(message);
     }
   };
 
@@ -98,8 +99,8 @@ function Register() {
               Please provide a non-empty password.
             </Form.Control.Feedback>
           </Form.Group>
-          {registerFailure && (
-            <p className="mt-2 text-danger">Registration Failed</p>
+          {registerMessage && (
+            <p className="mt-2 text-danger">{registerMessage}</p>
           )}
           <p className="lead mt-2">
             Already have an account? <a href="/signin">Sign In</a>
