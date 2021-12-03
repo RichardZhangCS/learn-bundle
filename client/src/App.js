@@ -6,6 +6,7 @@ import Postpage from "./Pages/Postpage";
 import { Register, SignIn } from "./Pages/AuthPages";
 import UserContext from "./util/UserContext";
 import { useEffect, useState } from "react";
+import PostViewPage from "./Pages/PostViewPage";
 
 function App() {
   /**
@@ -21,7 +22,6 @@ function App() {
         credentials: "include",
       });
       const userJson = await userFromApi.json();
-      console.log(userJson);
       if (userJson.username) {
         setUser(userJson);
       } else {
@@ -42,6 +42,8 @@ function App() {
           <Route exact path="/register" element={<Register />} />
 
           <Route exact path="/signin" element={<SignIn />} />
+
+          <Route exact path="/post/:postid" element={<PostViewPage />} />
         </Routes>
       </Router>
     </UserContext.Provider>

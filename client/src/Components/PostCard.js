@@ -3,9 +3,17 @@ import { Card } from "react-bootstrap";
 function PostCard(props) {
   let post = props.post;
   let index = props.index;
-  console.log(post.user);
+
+  const directToPostPage = () => {
+    window.location = `/post/${post._id}`;
+  };
   return (
-    <Card key={index} style={{ width: "18rem" }} className="m-2">
+    <Card
+      key={index}
+      style={{ width: "18rem" }}
+      className="m-2 post-card"
+      onClick={directToPostPage.bind(this)}
+    >
       <Card.Img
         variant="top"
         src={`data:image/${post.image.contentType};base64,${post.image.dataBase64Encoded}`}
