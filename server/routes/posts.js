@@ -14,6 +14,11 @@ router.get("/all", async (req, res, next) => {
   res.send(results);
 });
 
+router.get("/:id", async (req, res, next) => {
+  var post = await Post.findById(req.params.id);
+  res.send(post);
+});
+
 router.post("/update", PostController.post_update);
 
 module.exports = router;
