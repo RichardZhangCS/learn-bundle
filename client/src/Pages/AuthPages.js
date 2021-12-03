@@ -39,6 +39,12 @@ function Register() {
     setValidated(true);
   };
 
+  const handleUsernameChange = (e) => {
+    if (e.currentTarget.value.includes(" ")) {
+      e.currentTarget.value = e.currentTarget.value.replace(/\s/g, "");
+    }
+  };
+
   return (
     <Container>
       <div className="auth-form-container mt-5">
@@ -72,6 +78,7 @@ function Register() {
               name="username"
               type="text"
               placeholder="Enter username"
+              onChange={handleUsernameChange.bind(this)}
               required
             />
             <Form.Control.Feedback type="invalid">
@@ -139,6 +146,12 @@ function SignIn(props) {
 
     setValidated(true);
   };
+
+  const handleUsernameChange = (e) => {
+    if (e.currentTarget.value.includes(" ")) {
+      e.currentTarget.value = e.currentTarget.value.replace(/\s/g, "");
+    }
+  };
   return (
     <Container>
       <div className="auth-form-container mt-5">
@@ -150,6 +163,7 @@ function SignIn(props) {
               name="username"
               type="text"
               placeholder="Enter username"
+              onChange={handleUsernameChange.bind(this)}
               required
             />
             <Form.Control.Feedback type="invalid">

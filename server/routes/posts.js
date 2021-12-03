@@ -14,8 +14,9 @@ router.get("/all", async (req, res, next) => {
   res.send(results);
 });
 
-router.get("/:id", async (req, res, next) => {
-  var post = await Post.findById(req.params.id);
+router.get("/one/:id", async (req, res, next) => {
+  var post = await Post.findById(req.params.id).populate("user").lean();
+  post.image.dataBase64Encoded = post.image.data.toString("base64");
   res.send(post);
 });
 

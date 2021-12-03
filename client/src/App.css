@@ -63,3 +63,19 @@
 .post-card:hover {
   cursor: pointer;
 }
+
+.post-article-image {
+  width: 300px;
+  height: 100%;
+  float: left;
+}
+
+.card-description,
+.card-prereqs {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 4;
+  display: -webkit-box;
+  max-width: 200px;
+}

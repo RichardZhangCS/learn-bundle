@@ -3,7 +3,6 @@ import { Card } from "react-bootstrap";
 function PostCard(props) {
   let post = props.post;
   let index = props.index;
-
   const directToPostPage = () => {
     window.location = `/post/${post._id}`;
   };
@@ -23,7 +22,10 @@ function PostCard(props) {
         <Card.Subtitle className="text-muted mb-2">
           By {post.user ? post.user.username : "Anonymous"}
         </Card.Subtitle>
-        <Card.Text>{post.description}</Card.Text>
+        <Card.Text className="card-description">{post.description}</Card.Text>
+        <Card.Text className="card-prereqs">
+          Prerequisites: {post.prereqs}
+        </Card.Text>
         <Badge>Beginner Friendly</Badge>
         <Badge bg="danger" className="ms-1">
           Outdated
