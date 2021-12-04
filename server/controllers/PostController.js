@@ -38,7 +38,6 @@ exports.post_add = [
     });
     newPost.save((err) => {
       if (err) {
-        console.log(err);
         return next(err);
       }
       res.send("Successfully added new post to database");

@@ -26,6 +26,7 @@ function PostCard(props) {
         <Card.Text className="card-prereqs">
           Prerequisites: {post.prereqs}
         </Card.Text>
+        <Card.Text>{post.submission_date_formatted}</Card.Text>
         <Badge>Beginner Friendly</Badge>
         <Badge bg="danger" className="ms-1">
           Outdated

@@ -56,8 +56,6 @@ function PostForm() {
     setTags(newTags);
   };
 
-  console.log(tags);
-
   return (
     <section className="post-form-section">
       <Container className="py-3">

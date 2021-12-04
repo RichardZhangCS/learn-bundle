@@ -34,6 +34,7 @@ function PostView() {
           className="post-article-image me-2"
           src={`data:image/${post.image.contentType};base64,${post.image.dataBase64Encoded}`}
         ></img>
+        <p>{post.submission_date_formatted}</p>
         <p>
           <strong>Prerequisites: </strong>
           {post.prereqs}
