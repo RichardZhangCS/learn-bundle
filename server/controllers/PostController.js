@@ -20,12 +20,13 @@ var upload = multer({
 exports.post_add = [
   upload.single("image"),
   function (req, res, next) {
+    var tagsList = req.body.tags.split(",");
     var newPost = new Post({
       title: req.body.title,
       user: req.body.user,
       description: req.body.description,
       prereqs: req.body.prereqs,
-      tags: req.body.tags,
+      tags: tagsList,
       submission_date: Date.now(),
       image: {
         data: fs.readFileSync(

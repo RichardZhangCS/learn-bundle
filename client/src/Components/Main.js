@@ -37,7 +37,7 @@ function Main() {
           <Col className="d-flex justify-content-center flex-column">
             <Form className="mb-2">
               <InputGroup>
-                <div class="form-floating">
+                <div className="form-floating">
                   <Form.Control
                     type="search"
                     id="input-search"

@@ -79,3 +79,29 @@
   display: -webkit-box;
   max-width: 200px;
 }
+
+.tag {
+  font-size: 14px;
+  padding: 0.3em 0.4em 0.4em;
+  margin: 0 0.3em;
+  color: var(--bs-light);
+  background-color: var(--bs-primary);
+}
+.tag a {
+  color: #bbb;
+  cursor: pointer;
+  opacity: 0.6;
+}
+.tag a:hover {
+  opacity: 1;
+}
+.tag .remove {
+  vertical-align: bottom;
+  top: 0;
+}
+.tag a {
+  margin: 0 0 0 0.3em;
+}
+.tag a .bi-x-circle {
+  margin-bottom: 2px;
+}

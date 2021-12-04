@@ -8,7 +8,7 @@ var PostSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: false },
   description: { type: String, required: true },
   prereqs: { type: String, required: false },
-  tags: [{ type: Schema.Types.ObjectId, required: false }],
+  tags: [{ type: String, required: false }],
   submission_date: { type: Date, required: true },
   image: {
     data: Buffer,
