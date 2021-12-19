@@ -15,6 +15,7 @@ router.get("/all", async (req, res, next) => {
       post.submission_date
     ).toLocaleString(DateTime.DATE_MED);
   }
+  console.log(results[3].tags);
   res.send(results);
 });
 

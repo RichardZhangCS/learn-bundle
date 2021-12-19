@@ -60,6 +60,10 @@
   margin: auto;
 }
 
+.post-card {
+  min-height: 500px !important;
+}
+
 .post-card:hover {
   cursor: pointer;
 }
@@ -104,4 +108,8 @@
 }
 .tag a .bi-x-circle {
   margin-bottom: 2px;
+}
+
+p.lead {
+  color: var(--bs-white) !important;
 }

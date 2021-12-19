@@ -1,11 +1,13 @@
 import { Badge } from "react-bootstrap";
 import { Card } from "react-bootstrap";
+import { stringToColour, pickTextColorBasedOnBgColor } from "../util/TextColor";
 function PostCard(props) {
   let post = props.post;
   let index = props.index;
   const directToPostPage = () => {
     window.location = `/post/${post._id}`;
   };
+  console.log(post.tags);
   return (
     <Card
       key={index}
@@ -27,10 +29,28 @@ function PostCard(props) {
           Prerequisites: {post.prereqs}
         </Card.Text>
         <Card.Text>{post.submission_date_formatted}</Card.Text>
-        <Badge>Beginner Friendly</Badge>
-        <Badge bg="danger" className="ms-1">
-          Outdated
-        </Badge>
+        {post.tags.map((tag, index) => {
+          let bgColor = stringToColour(tag);
+          console.log(bgColor);
+          let textColor = pickTextColorBasedOnBgColor(bgColor);
+          return (
+            <Badge
+              className="me-1"
+              ref={(el) => {
+                if (el) {
+                  el.style.setProperty(
+                    "background-color",
+                    bgColor,
+                    "important"
+                  );
+                  el.style.setProperty("color", textColor, "important");
+                }
+              }}
+            >
+              {tag}
+            </Badge>
+          );
+        })}
       </Card.Body>
     </Card>
   );
