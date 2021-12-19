@@ -60,7 +60,7 @@ function Main() {
                 </div>
               ) : posts.length != 0 ? (
                 posts.map((post, index) => (
-                  <PostCard post={post} index={index}></PostCard>
+                  <PostCard post={post} index={index} key={index}></PostCard>
                 ))
               ) : (
                 <p className="lead">

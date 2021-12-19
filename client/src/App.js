@@ -17,6 +17,12 @@ function App() {
   const [user, setUser] = useState(undefined);
 
   useEffect(() => {
+    let userFromLocalStorage = localStorage.getItem("user");
+    console.log(userFromLocalStorage);
+    if (userFromLocalStorage) {
+      setUser(JSON.parse(userFromLocalStorage));
+      //return;
+    }
     async function getUserFromServer() {
       const userFromApi = await fetch("/currentUser", {
         credentials: "include",
@@ -24,8 +30,10 @@ function App() {
       const userJson = await userFromApi.json();
       if (userJson.username) {
         setUser(userJson);
+        localStorage.setItem("user", JSON.stringify(userJson));
       } else {
         setUser(undefined);
+        localStorage.removeItem("user");
       }
     }
     getUserFromServer();

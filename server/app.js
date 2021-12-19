@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 var dev_db_url =
-  "mongodb+srv://m001-student:m001-mongodb-basics@sandbox.czp9v.mongodb.net/tutorial-bundler?retryWrites=true&w=majority";
+  "mongodb+srv://rz-development:mZbXh170JciThTI5@sandbox.czp9v.mongodb.net/tutorial-bundler?retryWrites=true&w=majority";
 var mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
