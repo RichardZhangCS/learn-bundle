@@ -5,9 +5,8 @@ function PostCard(props) {
   let post = props.post;
   let index = props.index;
   const directToPostPage = () => {
-    window.location = `/post/${post._id}`;
+    window.location = `/posts/${post._id}/view`;
   };
-  console.log(post.tags);
   return (
     <Card
       key={index}
@@ -31,7 +30,6 @@ function PostCard(props) {
         <Card.Text>{post.submission_date_formatted}</Card.Text>
         {post.tags.map((tag, index) => {
           let bgColor = stringToColour(tag);
-          console.log(bgColor);
           let textColor = pickTextColorBasedOnBgColor(bgColor);
           return (
             <Badge

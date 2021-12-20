@@ -113,3 +113,10 @@
 p.lead {
   color: var(--bs-white) !important;
 }
+.category-button {
+  cursor: pointer !important;
+  background-color: var(--bs-light);
+}
+.category-button:hover {
+  background-color: rgb(219, 219, 219);
+}

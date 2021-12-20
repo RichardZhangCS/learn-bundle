@@ -10,11 +10,33 @@ import PostCard from "./PostCard";
 function Main() {
   const [posts, setPosts] = useState(null);
   const [user, setUser] = useContext(UserContext);
+  const [category, setCategory] = useState(null);
+
+  let categoryFilterer = (post) => {
+    if (!category) return true;
+    if (post.title.toLowerCase().includes(category.toLowerCase())) {
+      return true;
+    }
+    for (let tags of post.tags) {
+      if (tags.toLowerCase().includes(category.toLowerCase())) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  let changeCategory = (newCategory) => {
+    if (category !== newCategory) {
+      setCategory(newCategory);
+    } else {
+      setCategory(null);
+    }
+  };
 
   useEffect(() => {
     const getPostsFromApi = async () => {
       try {
-        let res = await fetch("http://localhost:9000/post/all", {
+        let res = await fetch("http://localhost:9000/posts", {
           credentials: "include",
           withCredentials: true,
         });
@@ -32,9 +54,12 @@ function Main() {
       <Container className="py-5">
         <Row>
           <Col xs={12} lg={4}>
-            <Categories></Categories>
+            <Categories
+              selectedCategory={category}
+              changeCategory={changeCategory}
+            ></Categories>
           </Col>
-          <Col className="d-flex justify-content-center flex-column">
+          <Col className="d-flex flex-column">
             <Form className="mb-2">
               <InputGroup>
                 <div className="form-floating">
@@ -59,9 +84,11 @@ function Main() {
                   />
                 </div>
               ) : posts.length != 0 ? (
-                posts.map((post, index) => (
-                  <PostCard post={post} index={index} key={index}></PostCard>
-                ))
+                posts
+                  .filter(categoryFilterer)
+                  .map((post, index) => (
+                    <PostCard post={post} index={index} key={index}></PostCard>
+                  ))
               ) : (
                 <p className="lead">
                   Seems like the database is sleepy today :(

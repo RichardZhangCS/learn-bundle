@@ -1,6 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./bootstrap.min (2).css";
+import "./bootstrap.min (4).css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from "./Pages/Homepage";
 import Postpage from "./Pages/Postpage";
@@ -19,7 +19,6 @@ function App() {
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
-    console.log(userFromLocalStorage);
     if (userFromLocalStorage) {
       setUser(JSON.parse(userFromLocalStorage));
       //return;
@@ -52,7 +51,7 @@ function App() {
 
           <Route exact path="/signin" element={<SignIn />} />
 
-          <Route exact path="/post/:postid" element={<PostViewPage />} />
+          <Route exact path="/posts/:postid/view" element={<PostViewPage />} />
         </Routes>
       </Router>
     </UserContext.Provider>

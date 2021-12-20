@@ -11,7 +11,7 @@ function PostView() {
 
   useEffect(() => {
     async function getPostFromId() {
-      const response = await fetch("/post/one/" + postid);
+      const response = await fetch("/posts/" + postid);
       const postFromApi = await response.json();
       setPost(postFromApi);
     }

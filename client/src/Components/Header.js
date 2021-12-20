@@ -12,6 +12,7 @@ function Header() {
         credentials: "include",
       });
       if (signOutResult.status == 200) {
+        localStorage.removeItem("user");
         window.location = "/signin";
       }
     } else {

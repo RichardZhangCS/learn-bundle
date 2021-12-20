@@ -1,12 +1,31 @@
 import { ListGroup } from "react-bootstrap";
 
-function Categories() {
+function Categories({ selectedCategory, changeCategory }) {
+  const categoryList = [
+    "Web Development",
+    "Machine Learning",
+    "Cloud Computing",
+    "Interview Prep",
+  ];
   return (
-    <ListGroup as="ul" className="category-list mb-3">
-      <ListGroup.Item as="li">Cras justo odio</ListGroup.Item>
-      <ListGroup.Item as="li">Dapibus ac facilisis in</ListGroup.Item>
-      <ListGroup.Item as="li">Morbi leo risus</ListGroup.Item>
-      <ListGroup.Item as="li">Porta ac consectetur ac</ListGroup.Item>
+    <ListGroup
+      as="ul"
+      className="category-list mb-3"
+      onClick={(e) => {
+        changeCategory(e.target.textContent);
+      }}
+    >
+      {categoryList.map((category, index) => (
+        <ListGroup.Item
+          as="li"
+          key={index}
+          className={
+            (category === selectedCategory && "active") + " category-button"
+          }
+        >
+          {category}
+        </ListGroup.Item>
+      ))}
     </ListGroup>
   );
 }

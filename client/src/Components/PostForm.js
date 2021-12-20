@@ -34,7 +34,7 @@ function PostForm() {
   const submitNewPost = async (form) => {
     var formData = new FormData(form);
     formData.append("tags", tags);
-    const response = await fetch("/post/add", {
+    const response = await fetch("/posts/", {
       method: "POST",
       body: formData,
       credentials: "include",
