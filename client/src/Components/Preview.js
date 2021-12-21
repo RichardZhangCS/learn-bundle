@@ -4,7 +4,7 @@ import { useContext } from "react";
 import UserContext from "./../util/UserContext";
 
 function Preview() {
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   return (
     <section id="preview">
       <Container className="preview-container text-light text-center py-3">

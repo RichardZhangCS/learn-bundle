@@ -1,13 +1,9 @@
 import { Form } from "react-bootstrap";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { useContext, useState } from "react";
-import path from "path";
+import { useState } from "react";
 
 function Register() {
-  const [formState, setFormState] = useState({
-    selectAns: 0,
-  });
   const [validated, setValidated] = useState(false);
   const [registerMessage, setRegisterMessage] = useState(null);
 
@@ -21,7 +17,7 @@ function Register() {
       body: data,
       credentials: "include",
     });
-    if (res.status == 200) {
+    if (res.status === 200) {
       window.location = "/";
     } else {
       const message = await res.text();
@@ -49,7 +45,7 @@ function Register() {
   return (
     <Container>
       <div className="auth-form-container mt-5">
-        <h2>Register to Tutorial Bundler</h2>
+        <h2>Register to Learn Bundle</h2>
         <Form
           validated={validated}
           onSubmit={handleSubmit}
@@ -129,7 +125,7 @@ function SignIn(props) {
       credentials: "include",
       withCredentials: true,
     });
-    if (res.status == 200) {
+    if (res.status === 200) {
       window.location = "/";
     } else {
       setSignInFailure(true);
@@ -156,7 +152,7 @@ function SignIn(props) {
   return (
     <Container>
       <div className="auth-form-container mt-5">
-        <h2>Sign in to Tutorial Bundler</h2>
+        <h2>Sign in to Learn Bundle</h2>
         <Form validated={validated} noValidate onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Username</Form.Label>

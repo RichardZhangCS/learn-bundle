@@ -16,7 +16,7 @@ function PostView() {
       setPost(postFromApi);
     }
     getPostFromId();
-  }, []);
+  }, [postid]);
 
   if (!post) {
     return (
@@ -33,6 +33,7 @@ function PostView() {
         <img
           className="post-article-image me-2"
           src={`data:image/${post.image.contentType};base64,${post.image.dataBase64Encoded}`}
+          alt={"Visualization for " + post.title}
         ></img>
         <p>{post.submission_date_formatted}</p>
         <p>

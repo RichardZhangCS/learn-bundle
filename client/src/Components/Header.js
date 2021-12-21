@@ -4,14 +4,14 @@ import UserContext from "./../util/UserContext";
 import { useContext } from "react";
 
 function Header() {
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
   const handleClick = async (e) => {
     if (user) {
       const signOutResult = await fetch("/signout", {
         credentials: "include",
       });
-      if (signOutResult.status == 200) {
+      if (signOutResult.status === 200) {
         localStorage.removeItem("user");
         window.location = "/signin";
       }
@@ -25,7 +25,7 @@ function Header() {
       <header>
         <Navbar variant="dark" bg="dark" expand="lg">
           <Container>
-            <Navbar.Brand href="/">Tutorial Bundler</Navbar.Brand>
+            <Navbar.Brand href="/">Learn Bundle</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="ms-auto">

@@ -18,7 +18,7 @@ function PostForm() {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key == "Enter") {
+    if (e.key === "Enter") {
       setValidated(false);
       e.preventDefault();
     }
@@ -26,6 +26,7 @@ function PostForm() {
 
   const handleChange = (e) => {
     e.currentTarget.value = e.currentTarget.value.replace(
+      // eslint-disable-next-line
       /[.,\/#!$%\^&\*;:{}=\-_`~()]/g,
       ""
     );
@@ -39,13 +40,13 @@ function PostForm() {
       body: formData,
       credentials: "include",
     });
-    if (response.status == 200) {
+    if (response.status === 200) {
       window.location.assign("/");
     }
   };
 
   const handleKeyUp = (e) => {
-    if (e.key == "Enter" && e.target.value && !tags.includes(e.target.value)) {
+    if (e.key === "Enter" && e.target.value && !tags.includes(e.target.value)) {
       setTags(tags.concat(e.target.value));
       e.target.value = "";
     }
@@ -120,12 +121,10 @@ function PostForm() {
                 return (
                   <span key={index} className="tag label label-info">
                     <span>{tag}</span>
-                    <a>
-                      <i
-                        className="bi-x-circle"
-                        onClick={handleIconClick.bind(this, null, tag)}
-                      ></i>
-                    </a>
+                    <i
+                      className="bi-x-circle"
+                      onClick={handleIconClick.bind(this, null, tag)}
+                    ></i>
                   </span>
                 );
               })}

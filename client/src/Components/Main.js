@@ -1,15 +1,12 @@
-import { Form, InputGroup, Row, Col, Badge } from "react-bootstrap";
+import { Form, InputGroup, Row, Col } from "react-bootstrap";
 import Categories from "./Categories";
-import { Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Spinner } from "react-bootstrap";
-import { useState, useEffect, useContext } from "react";
-import UserContext from "../util/UserContext";
+import { useState, useEffect } from "react";
 import PostCard from "./PostCard";
 function Main() {
   const [posts, setPosts] = useState(null);
-  const [user, setUser] = useContext(UserContext);
   const [category, setCategory] = useState(null);
 
   let categoryFilterer = (post) => {
@@ -83,7 +80,7 @@ function Main() {
                     animation="border"
                   />
                 </div>
-              ) : posts.length != 0 ? (
+              ) : posts.length !== 0 ? (
                 posts
                   .filter(categoryFilterer)
                   .map((post, index) => (
