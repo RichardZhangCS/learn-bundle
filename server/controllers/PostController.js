@@ -24,6 +24,7 @@ exports.post_add = [
     var newPost = new Post({
       title: req.body.title,
       user: req.body.user,
+      link: req.body.link,
       description: req.body.description,
       prereqs: req.body.prereqs,
       tags: tagsList,
@@ -52,6 +53,7 @@ exports.post_update = [
       _id: req.body.id,
       title: req.body.title,
       user: req.body.user,
+      link: req.body.link,
       description: req.body.description,
       prereqs: req.body.prereqs,
       tags: req.body.tags,

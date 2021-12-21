@@ -35,7 +35,11 @@ function PostView() {
           src={`data:image/${post.image.contentType};base64,${post.image.dataBase64Encoded}`}
           alt={"Visualization for " + post.title}
         ></img>
+
         <p>{post.submission_date_formatted}</p>
+        <a href={post.link} target="_blank" rel="noopener noreferrer">
+          Link to resource
+        </a>
         <p>
           <strong>Prerequisites: </strong>
           {post.prereqs}

@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var PostSchema = new Schema({
   title: { type: String, required: true },
   user: { type: Schema.Types.ObjectId, ref: "User", required: false },
+  link: { type: String, required: true },
   description: { type: String, required: true },
   prereqs: { type: String, required: false },
   tags: [{ type: String, required: false }],
