@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { Spinner } from "react-bootstrap";
+import { Button, Form, Spinner } from "react-bootstrap";
 import { useParams } from "react-router";
 import { Container } from "react-bootstrap";
 
 function PostView() {
   const { postid } = useParams();
   const [post, setPost] = useState(undefined);
+  const [validated, setValidated] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   let paragraphs = post ? post.description.split("\n") : undefined;
 
@@ -18,6 +20,34 @@ function PostView() {
     getPostFromId();
   }, [postid]);
 
+  function handleCommentSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.currentTarget.checkValidity()) {
+      submitCommentToAPI(e.currentTarget);
+    }
+
+    setValidated(true);
+  }
+
+  async function submitCommentToAPI(form) {
+    let formData = new FormData(form);
+    console.log(formData.get("text"));
+    setLoading(true);
+    const res = await fetch("/posts/" + postid + "/comments/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      withCredentials: true,
+      body: JSON.stringify({ text: formData.get("text") }),
+    });
+    if (res.ok) {
+      setLoading(false);
+      const response = await fetch("/posts/" + postid);
+      const postFromApi = await response.json();
+      setPost(postFromApi);
+    }
+  }
   if (!post) {
     return (
       <div className="spinner-container mt-3">
@@ -27,7 +57,7 @@ function PostView() {
   }
   return (
     <section className="post-view">
-      <Container className="py-2">
+      <Container className="p-3 bg-light post-view-container mt-5 border rounded">
         <h2>{post.title}</h2>
         <h4 className="text-muted">By {post.user.username}</h4>
         <img
@@ -46,6 +76,63 @@ function PostView() {
         </p>
         {paragraphs &&
           paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+      </Container>
+      <Container>
+        <h4 className="mt-2">Comments</h4>
+      </Container>
+      {post.comments &&
+        post.comments.map((comment, index) => (
+          <Container className="p-3 bg-light post-view-container my-2 border rounded">
+            <p className="h4">
+              <img
+                src="https://randomuser.me/api/portraits/men/6.jpg"
+                alt={`${comment.user.username}'s profile icon`}
+                className="rounded-circle img-fluid me-3"
+                style={{ width: "50px", height: "auto" }}
+              />
+              {comment.user.username}
+            </p>
+            <p>{comment.text}</p>
+            <div className="float-start">
+              <div className="border engagement-button m-1">
+                <p className="m-1">
+                  <i className="bi bi-hand-thumbs-up"></i>
+                </p>
+              </div>
+              <div className="border engagement-button m-1">
+                <p className="m-1">
+                  <i className="bi bi-hand-thumbs-down"></i>
+                </p>
+              </div>
+            </div>
+
+            <p className="float-end">{post.submission_date_formatted}</p>
+          </Container>
+        ))}
+      <Container className="p-3 bg-light post-view-container my-2 border rounded">
+        <p>Make a comment</p>
+        <Form
+          validated={validated}
+          noValidate
+          onSubmit={handleCommentSubmit.bind(this)}
+        >
+          <Form.Control
+            as="textarea"
+            type="text"
+            name="text"
+            placeholder="Type your comment here"
+            required
+          ></Form.Control>
+          <Form.Control.Feedback type="invalid">
+            You cannot submit an empty comment!
+          </Form.Control.Feedback>
+          {loading && (
+            <Spinner className="float-start mt-3" animation="border"></Spinner>
+          )}
+          <Button className="mt-3 float-end" type="submit">
+            Submit
+          </Button>
+        </Form>
       </Container>
     </section>
   );

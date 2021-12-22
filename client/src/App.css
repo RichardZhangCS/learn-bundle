@@ -120,3 +120,29 @@
 .bi-x-circle {
   cursor: pointer !important;
 }
+.post-view::before {
+  content: "";
+  position: fixed;
+  background-color: rgba(241, 241, 241, 0.699);
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  top: 0;
+}
+
+.post-view-container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.engagement-button {
+  cursor: pointer !important;
+  border-radius: 16px;
+  display: inline-block;
+  width: 40px;
+  position: relative;
+}
+.engagement-button p {
+  text-align: center;
+}

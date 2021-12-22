@@ -15,6 +15,7 @@ var PostSchema = new Schema({
     data: Buffer,
     contentType: String,
   },
+  comments: [{ type: Schema.Types.ObjectId, ref: "Comment", required: false }],
 });
 
 PostSchema.virtual("submission_date_formatted").get(() => {

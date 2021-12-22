@@ -18,7 +18,7 @@ function PostForm() {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
       setValidated(false);
       e.preventDefault();
     }

@@ -32,7 +32,7 @@ function App() {
         setUser(userJson);
         localStorage.setItem("user", JSON.stringify(userJson));
       } else {
-        setUser(undefined);
+        setUser(null);
         localStorage.removeItem("user");
       }
     }
