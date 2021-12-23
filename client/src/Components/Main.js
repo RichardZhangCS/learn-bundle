@@ -65,7 +65,7 @@ function Main() {
                     id="input-search"
                     placeholder="skill"
                   />
-                  <label for="input-password">I want to learn...</label>
+                  <label htmlFor="input-search-query">I want to learn...</label>
                 </div>
                 <Button variant="primary">
                   <i className="bi bi-search"></i>

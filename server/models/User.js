@@ -6,6 +6,10 @@ const UserSchema = new mongoose.Schema({
   hash: { type: String, required: false },
   salt: { type: String, required: true },
   email: { type: String, required: false },
+  avatar: {
+    data: Buffer,
+    contentType: String,
+  },
 });
 
 module.exports = mongoose.model("User", UserSchema);

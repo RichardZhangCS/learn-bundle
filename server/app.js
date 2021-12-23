@@ -13,6 +13,7 @@ const MongoStore = require("connect-mongo")(session);
 var indexRouter = require("./routes/index");
 var postRouter = require("./routes/posts");
 var authRouter = require("./routes/auth");
+var userRouter = require("./routes/user");
 
 require("dotenv").config();
 var app = express();
@@ -28,9 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-var dev_db_url =
-  "mongodb+srv://rz-development:mZbXh170JciThTI5@sandbox.czp9v.mongodb.net/tutorial-bundler?retryWrites=true&w=majority";
-var mongoDB = process.env.MONGODB_URI || dev_db_url;
+var mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
@@ -59,6 +58,7 @@ app.use(passport.session());
 
 app.use("/", authRouter);
 app.use("/posts", postRouter);
+app.use("/users", userRouter);
 app.use("/", indexRouter);
 
 // catch 404 and forward to error handler

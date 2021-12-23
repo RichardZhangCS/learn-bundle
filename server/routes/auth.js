@@ -3,9 +3,28 @@ const router = express.Router();
 const genPassword = require("../lib/passwordUtils").genPassword;
 const passport = require("passport");
 const User = require("../models/User");
+const fs = require("fs");
+const path = require("path");
+const multer = require("multer");
+
+var storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    console.log("reached");
+    cb(null, file.fieldname);
+  },
+});
+
+var upload = multer({
+  storage: storage,
+  limits: { fieldSize: 10 * 1024 * 1024 },
+});
 
 router.post(
   "/register",
+  upload.single("avatar"),
   async (req, res, next) => {
     const saltHash = genPassword(req.body.password);
 
@@ -27,6 +46,14 @@ router.post(
       email: req.body.email,
       hash: hash,
       salt: salt,
+      avatar: req.file
+        ? {
+            data: fs.readFileSync(
+              path.join(__dirname, "..", "uploads", req.file.filename)
+            ),
+            contentType: req.file.mimetype,
+          }
+        : null,
     });
 
     var user = newUser

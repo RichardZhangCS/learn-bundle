@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Form, Spinner } from "react-bootstrap";
 import { useParams } from "react-router";
 import { Container } from "react-bootstrap";
+import defaultAvatar from "../default_profile_picture.jpg";
 
 function PostView() {
   const { postid } = useParams();
@@ -83,10 +84,20 @@ function PostView() {
       {post.comments &&
         post.comments.map((comment, index) => (
           <Container className="p-3 bg-light post-view-container my-2 border rounded">
-            <p className="h4">
+            <p
+              className="h4"
+              onClick={() => {
+                window.location = `/users/name/${comment.user.username}/view`;
+              }}
+              style={{ cursor: "pointer" }}
+            >
               <img
-                src="https://randomuser.me/api/portraits/men/6.jpg"
-                alt={`${comment.user.username}'s profile icon`}
+                src={
+                  comment.user.avatar
+                    ? `data:image/${comment.user.avatar.contentType};base64,${comment.user.avatar.dataBase64Encoded}`
+                    : defaultAvatar
+                }
+                alt={`${comment.user.username}'s avatar`}
                 className="rounded-circle img-fluid me-3"
                 style={{ width: "50px", height: "auto" }}
               />
@@ -106,7 +117,7 @@ function PostView() {
               </div>
             </div>
 
-            <p className="float-end">{post.submission_date_formatted}</p>
+            <p className="float-end">{comment.submission_date_formatted}</p>
           </Container>
         ))}
       <Container className="p-3 bg-light post-view-container my-2 border rounded">

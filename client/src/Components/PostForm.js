@@ -130,7 +130,7 @@ function PostForm() {
               })}
             </Col>
             <Col>
-              <Form.Label for="tagDataList" className="py-2">
+              <Form.Label htmlFor="tagDataList" className="py-2">
                 Tag Search
               </Form.Label>
               <Form.Group>

@@ -44,6 +44,7 @@ function PostCard(props) {
                   el.style.setProperty("color", textColor, "important");
                 }
               }}
+              key={index}
             >
               {tag}
             </Badge>

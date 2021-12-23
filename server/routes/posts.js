@@ -34,6 +34,10 @@ router.get("/:id", async (req, res, next) => {
     comment.submission_date_formatted = DateTime.fromJSDate(
       comment.submission_date
     ).toLocaleString(DateTime.DATETIME_MED);
+    let commentAvatar = comment.user.avatar;
+    if (commentAvatar) {
+      commentAvatar.dataBase64Encoded = commentAvatar.data.toString("base64");
+    }
   }
   res.send(post);
 });
@@ -41,7 +45,6 @@ router.get("/:id", async (req, res, next) => {
 router.put("/", PostController.post_update);
 
 router.post("/:id/comments", async (req, res, next) => {
-  console.log(req.body);
   try {
     var newComment = new Comment({
       user: req.user,

@@ -23,18 +23,19 @@ exports.post_add = [
     var tagsList = req.body.tags.split(",");
     var newPost = new Post({
       title: req.body.title,
-      user: req.body.user,
       link: req.body.link,
       description: req.body.description,
       prereqs: req.body.prereqs,
       tags: tagsList,
       submission_date: Date.now(),
-      image: {
-        data: fs.readFileSync(
-          path.join(__dirname, "..", "uploads", req.file.filename)
-        ),
-        contentType: req.file.mimetype,
-      },
+      image: req.file
+        ? {
+            data: fs.readFileSync(
+              path.join(__dirname, "..", "uploads", req.file.filename)
+            ),
+            contentType: req.file.mimetype,
+          }
+        : null,
       user: req.user,
     });
     newPost.save((err) => {

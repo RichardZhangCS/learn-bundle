@@ -8,6 +8,7 @@ import { Register, SignIn } from "./Pages/AuthPages";
 import UserContext from "./util/UserContext";
 import { useEffect, useState } from "react";
 import PostViewPage from "./Pages/PostViewPage";
+import UserProfilePage from "./Pages/UserProfilePage";
 
 function App() {
   /**
@@ -52,6 +53,18 @@ function App() {
           <Route exact path="/signin" element={<SignIn />} />
 
           <Route exact path="/posts/:postid/view" element={<PostViewPage />} />
+
+          <Route
+            exact
+            path="/users/name/:username/view"
+            element={<UserProfilePage />}
+          />
+
+          <Route
+            exact
+            path="/users/id/:userid/view"
+            element={<UserProfilePage />}
+          />
         </Routes>
       </Router>
     </UserContext.Provider>
