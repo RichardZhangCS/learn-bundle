@@ -29,7 +29,11 @@ function Header() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="ms-auto">
-                {user && <Nav.Link href="/myposts">My Posts</Nav.Link>}
+                {user && (
+                  <Nav.Link href={`/users/name/${user.username}/view`}>
+                    My Profile
+                  </Nav.Link>
+                )}
                 <Nav.Link href={user ? "/account" : "/signin"}>
                   {user ? "Account" : "Sign In"}
                 </Nav.Link>

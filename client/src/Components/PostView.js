@@ -120,7 +120,7 @@ function PostView() {
             <p className="float-end">{comment.submission_date_formatted}</p>
           </Container>
         ))}
-      <Container className="p-3 bg-light post-view-container my-2 border rounded">
+      <Container className="p-3 bg-light post-view-container mt-2 mb-5 border rounded">
         <p>Make a comment</p>
         <Form
           validated={validated}

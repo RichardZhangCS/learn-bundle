@@ -56,7 +56,7 @@ function Main() {
               changeCategory={changeCategory}
             ></Categories>
           </Col>
-          <Col className="d-inline-flex flex-column align-items-center">
+          <div className="d-inline-flex flex-column align-items-center w-auto">
             <div className="p-4 bg-light d-flex justify-content-center align-items-center rounded">
               <InputGroup>
                 {/* <div className="form-floating"> */}
@@ -92,7 +92,7 @@ function Main() {
                 </p>
               )}
             </Row>
-          </Col>
+          </div>
         </Row>
       </Container>
     </section>
