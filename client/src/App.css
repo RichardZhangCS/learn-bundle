@@ -147,3 +147,30 @@
 .engagement-button p {
   text-align: center;
 }
+
+.main::before {
+  content: "";
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+  top: 0;
+  background-color: rgba(241, 241, 241, 0.699);
+}
+.post-card-container {
+  display: grid !important;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+@media (min-width: 576px) {
+  .post-card-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 768px) {
+  .post-card-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}

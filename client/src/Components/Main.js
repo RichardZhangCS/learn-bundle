@@ -48,31 +48,31 @@ function Main() {
 
   return (
     <section className="main">
-      <Container className="py-5">
-        <Row>
-          <Col xs={12} lg={4}>
+      <Container className="p-5">
+        <Row className="justify-content-center">
+          <Col xs={8} xl={4}>
             <Categories
               selectedCategory={category}
               changeCategory={changeCategory}
             ></Categories>
           </Col>
-          <Col className="d-flex flex-column">
-            <Form className="mb-2">
+          <Col className="d-inline-flex flex-column align-items-center">
+            <div className="p-4 bg-light d-flex justify-content-center align-items-center rounded">
               <InputGroup>
-                <div className="form-floating">
-                  <Form.Control
-                    type="search"
-                    id="input-search"
-                    placeholder="skill"
-                  />
-                  <label htmlFor="input-search-query">I want to learn...</label>
-                </div>
+                {/* <div className="form-floating"> */}
+                <Form.Control
+                  type="search"
+                  id="input-search"
+                  placeholder="I want to learn..."
+                />
+                {/* <label htmlFor="input-search-query">I want to learn...</label> */}
+                {/* </div> */}
                 <Button variant="primary">
                   <i className="bi bi-search"></i>
                 </Button>
               </InputGroup>
-            </Form>
-            <Row>
+            </div>
+            <Row className="post-card-container">
               {!posts ? (
                 <div className="spinner-container">
                   <Spinner

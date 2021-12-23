@@ -11,7 +11,7 @@ function PostCard(props) {
     <Card
       key={index}
       style={{ width: "18rem" }}
-      className="m-2 post-card"
+      className="m-2 post-card pt-2"
       onClick={directToPostPage.bind(this)}
     >
       <Card.Img
