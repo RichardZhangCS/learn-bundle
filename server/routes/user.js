@@ -70,4 +70,31 @@ router.put(
   }
 );
 
+router.put("/id/:userid/username", async function (req, res, next) {
+  if (req.user._id != req.params.userid) {
+    return res.status(403).send("Unauthorized to change user");
+  }
+  try {
+    var user = await User.findById(req.params.userid);
+    if (!user.username) {
+      return res.status(404).send("User is not found");
+    }
+    var userWithSameUsername = await User.findOne({
+      username: req.body.username,
+    });
+
+    if (
+      userWithSameUsername &&
+      userWithSameUsername.username === req.body.username
+    ) {
+      return res.status(400).send("Username already taken");
+    }
+    user.username = req.body.username;
+    await user.save();
+    res.status(200).send("Successfully updated username");
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+});
+
 module.exports = router;

@@ -5,12 +5,17 @@ import defaultAvatar from "../default_profile_picture.jpg";
 import UserContext from "./../util/UserContext";
 import CropperModal from "./CropperModal";
 function UserProfile({ ownUser }) {
-  const [user] = useContext(UserContext);
+  const [user, getUserFromServer] = useContext(UserContext);
   const routeParams = useParams();
   const [userOfProfile, setUserOfProfile] = useState(undefined);
   const [editUsernameMode, setEditUsernameMode] = useState(false);
   const [showCropper, setShowCropper] = useState(false);
   const [validated, setValidated] = useState(false);
+  const [loading, setLoading] = useState({
+    avatar: false,
+    name: false,
+  });
+  const [errorMessage, setErrorMessage] = useState(null);
   const newAvatarCandidate = useRef(null);
 
   function getBase64(file) {
@@ -33,6 +38,7 @@ function UserProfile({ ownUser }) {
     // updateAPI
     let formData = new FormData();
     formData.append("avatar", croppedImage);
+    setLoading({ ...loading, avatar: true });
     const res = await fetch(`/users/id/${userOfProfile._id}/avatar`, {
       method: "PUT",
       credentials: "include",
@@ -47,6 +53,7 @@ function UserProfile({ ownUser }) {
           dataBase64Encoded: await getBase64(croppedImage),
         },
       });
+      setLoading({ ...loading, avatar: false });
     }
   };
 
@@ -59,6 +66,31 @@ function UserProfile({ ownUser }) {
     e.stopPropagation();
     if (e.currentTarget.checkValidity()) {
       // call to api;
+
+      setLoading({ ...loading, username: true });
+      async function callUsernameChangeToAPI() {
+        const formData = new URLSearchParams(new FormData(e.currentTarget));
+        const res = await fetch(`/users/id/${userOfProfile._id}/username`, {
+          method: "PUT",
+          body: formData,
+          credentials: "include",
+        });
+        if (res.ok) {
+          setLoading({ ...loading, username: false });
+          setUserOfProfile({
+            ...userOfProfile,
+            username: formData.get("username"),
+          });
+          setEditUsernameMode(false);
+          getUserFromServer();
+        } else {
+          const message = await res.text();
+          setLoading({ ...loading, username: false });
+          setErrorMessage(message);
+        }
+      }
+
+      callUsernameChangeToAPI();
     }
     setValidated(true);
   };
@@ -111,6 +143,11 @@ function UserProfile({ ownUser }) {
               <p className="h5 position-absolute text-center" unselectable="on">
                 Click to change your avatar
               </p>
+              {loading.avatar && (
+                <div className="spinner-container">
+                  <Spinner animation="border"></Spinner>
+                </div>
+              )}
               <input
                 type="file"
                 style={{
@@ -143,31 +180,58 @@ function UserProfile({ ownUser }) {
                 )}
               </h4>
             ) : (
-              <Form
-                validated={validated}
-                noValidate
-                onSubmit={handleUsernameChangeSubmit.bind(this)}
-              >
-                <Form.Group>
-                  <InputGroup style={{ width: "250px" }} className="my-2">
-                    <Form.Control
-                      required="true"
-                      type="text"
-                      defaultValue={userOfProfile.username}
-                    ></Form.Control>
+              <>
+                <Form
+                  validated={validated}
+                  noValidate
+                  onSubmit={handleUsernameChangeSubmit.bind(this)}
+                  className="position-relative"
+                >
+                  <Form.Group>
+                    {loading.username && (
+                      <Spinner
+                        animation="border"
+                        className="ms-2 position-absolute"
+                        style={{
+                          top: "calc(50% - 1rem)",
+                          right: "-50px",
+                        }}
+                      ></Spinner>
+                    )}
+                    <InputGroup style={{ width: "250px" }} className="my-2">
+                      <Form.Control
+                        required="true"
+                        type="text"
+                        name="username"
+                        defaultValue={userOfProfile.username}
+                        onChange={() => {
+                          setErrorMessage(null);
+                        }}
+                      ></Form.Control>
 
-                    <Button type="submit">
-                      <i className="bi bi-check"></i>
-                    </Button>
-                    <Form.Control.Feedback
-                      type="invalid"
-                      className="text-center"
-                    >
-                      {"Please enter a nonempty user name"}
-                    </Form.Control.Feedback>
-                  </InputGroup>
-                </Form.Group>
-              </Form>
+                      <Button type="submit">
+                        <i className="bi bi-check"></i>
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          setEditUsernameMode(false);
+                        }}
+                      >
+                        <i className="bi bi-x-circle"></i>
+                      </Button>
+                      <Form.Control.Feedback
+                        type="invalid"
+                        className="text-center"
+                      >
+                        {"Please enter a nonempty user name"}
+                      </Form.Control.Feedback>
+                      <Form.Control.Feedback className="text-danger text-center">
+                        {errorMessage}
+                      </Form.Control.Feedback>
+                    </InputGroup>
+                  </Form.Group>
+                </Form>
+              </>
             )}
           </Container>
           <Container className="p-3 bg-light post-view-container my-2 border rounded">
