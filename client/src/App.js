@@ -39,7 +39,6 @@ function App() {
     }
     getUserFromServer();
   }, []);
-
   return (
     <UserContext.Provider value={[user, setUser]}>
       <Router>
@@ -64,6 +63,12 @@ function App() {
             exact
             path="/users/id/:userid/view"
             element={<UserProfilePage />}
+          />
+
+          <Route
+            exact
+            path="/users/me/view"
+            element={<UserProfilePage user={user} />}
           />
         </Routes>
       </Router>

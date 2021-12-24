@@ -60,7 +60,12 @@ function PostView() {
     <section className="post-view">
       <Container className="p-3 bg-light post-view-container mt-5 border rounded">
         <h2>{post.title}</h2>
-        <h4 className="text-muted">By {post.user.username}</h4>
+        <h4 className="text-muted">
+          By{" "}
+          <a href={`/users/name/${post.user.username}/view`}>
+            {post.user.username}
+          </a>
+        </h4>
         <img
           className="post-article-image me-2"
           src={`data:image/${post.image.contentType};base64,${post.image.dataBase64Encoded}`}

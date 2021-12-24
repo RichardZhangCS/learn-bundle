@@ -1,11 +1,11 @@
 import Header from "../Components/Header";
 import UserProfile from "./../Components/UserProfile";
 
-function UserProfilePage() {
+function UserProfilePage({ user }) {
   return (
     <>
       <Header></Header>
-      <UserProfile></UserProfile>
+      <UserProfile preprovidedUser={user}></UserProfile>
     </>
   );
 }

@@ -30,9 +30,7 @@ function Header() {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="ms-auto">
                 {user && (
-                  <Nav.Link href={`/users/name/${user.username}/view`}>
-                    My Profile
-                  </Nav.Link>
+                  <Nav.Link href={`/users/me/view`}>My Profile</Nav.Link>
                 )}
                 <Nav.Link href={user ? "/account" : "/signin"}>
                   {user ? "Account" : "Sign In"}
