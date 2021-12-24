@@ -18,29 +18,32 @@ function App() {
    */
   const [user, setUser] = useState(undefined);
 
+  async function getUserFromServer() {
+    const userFromApi = await fetch("/currentUser", {
+      credentials: "include",
+    });
+    const userJson = await userFromApi.json();
+    if (userJson.username) {
+      setUser(userJson);
+      localStorage.setItem("user", JSON.stringify(userJson));
+    } else {
+      setUser(null);
+      localStorage.removeItem("user");
+    }
+  }
+
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
     if (userFromLocalStorage) {
       setUser(JSON.parse(userFromLocalStorage));
       //return;
+    } else {
+      getUserFromServer();
     }
-    async function getUserFromServer() {
-      const userFromApi = await fetch("/currentUser", {
-        credentials: "include",
-      });
-      const userJson = await userFromApi.json();
-      if (userJson.username) {
-        setUser(userJson);
-        localStorage.setItem("user", JSON.stringify(userJson));
-      } else {
-        setUser(null);
-        localStorage.removeItem("user");
-      }
-    }
-    getUserFromServer();
   }, []);
+
   return (
-    <UserContext.Provider value={[user, setUser]}>
+    <UserContext.Provider value={[user, getUserFromServer]}>
       <Router>
         <Routes>
           <Route exact path="/" element={<Homepage />} />
@@ -68,7 +71,8 @@ function App() {
           <Route
             exact
             path="/users/me/view"
-            element={<UserProfilePage user={user} />}
+            element={<UserProfilePage />}
+            ownUser={true}
           />
         </Routes>
       </Router>

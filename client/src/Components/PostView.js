@@ -33,7 +33,6 @@ function PostView() {
 
   async function submitCommentToAPI(form) {
     let formData = new FormData(form);
-    console.log(formData.get("text"));
     setLoading(true);
     const res = await fetch("/posts/" + postid + "/comments/", {
       method: "POST",

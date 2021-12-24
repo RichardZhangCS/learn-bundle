@@ -72,7 +72,7 @@ function Main() {
                 </Button>
               </InputGroup>
             </div>
-            <Row className="post-card-container">
+            <Row>
               {!posts ? (
                 <div className="spinner-container">
                   <Spinner
@@ -81,11 +81,11 @@ function Main() {
                   />
                 </div>
               ) : posts.length !== 0 ? (
-                posts
-                  .filter(categoryFilterer)
-                  .map((post, index) => (
+                <div className="post-card-container">
+                  {posts.filter(categoryFilterer).map((post, index) => (
                     <PostCard post={post} index={index} key={index}></PostCard>
-                  ))
+                  ))}
+                </div>
               ) : (
                 <p className="lead">
                   Seems like the database is sleepy today :(

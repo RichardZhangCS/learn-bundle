@@ -4,7 +4,7 @@ import { useContext, useEffect, useState, useRef } from "react";
 import defaultAvatar from "../default_profile_picture.jpg";
 import UserContext from "./../util/UserContext";
 import CropperModal from "./CropperModal";
-function UserProfile({ preprovidedUser }) {
+function UserProfile({ ownUser }) {
   const [user] = useContext(UserContext);
   const routeParams = useParams();
   const [userOfProfile, setUserOfProfile] = useState(undefined);
@@ -31,13 +31,23 @@ function UserProfile({ preprovidedUser }) {
   const handleSetAvatarChange = async (croppedImage) => {
     newAvatarCandidate.current = null;
     // updateAPI
-    setUserOfProfile({
-      ...userOfProfile,
-      avatar: {
-        contentType: croppedImage.type,
-        dataBase64Encoded: await getBase64(croppedImage),
-      },
+    let formData = new FormData();
+    formData.append("avatar", croppedImage);
+    const res = await fetch(`/users/id/${userOfProfile._id}/avatar`, {
+      method: "PUT",
+      credentials: "include",
+      withCredentials: true,
+      body: formData,
     });
+    if (res.ok) {
+      setUserOfProfile({
+        ...userOfProfile,
+        avatar: {
+          contentType: croppedImage.type,
+          dataBase64Encoded: await getBase64(croppedImage),
+        },
+      });
+    }
   };
 
   const isEditable = () => {
@@ -65,18 +75,23 @@ function UserProfile({ preprovidedUser }) {
         const userJson = await res.json();
         setUserOfProfile(userJson);
       }
-      getUserByNameFromAPI(routeParams.username);
+      getUserByNameFromAPI();
     } else if (routeParams.userid) {
       async function getUserByIDFromAPI() {
         const res = await fetch(`/users/id/${routeParams.userid}`);
         const userJson = await res.json();
         setUserOfProfile(userJson);
       }
-      getUserByIDFromAPI(routeParams.userid);
-    } else if (preprovidedUser) {
-      setUserOfProfile(preprovidedUser);
+      getUserByIDFromAPI();
+    } else if (ownUser && user) {
+      async function getCurrentUserFromAPI() {
+        const res = await fetch(`/users/id/${user._id}`);
+        const userJson = await res.json();
+        setUserOfProfile(userJson);
+      }
+      getCurrentUserFromAPI();
     }
-  }, [routeParams, preprovidedUser]);
+  }, [routeParams, user]);
   return (
     <section className="user-profile">
       {userOfProfile ? (
