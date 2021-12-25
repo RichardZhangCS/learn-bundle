@@ -122,7 +122,7 @@ function PostForm() {
                   <span key={index} className="tag label label-info">
                     <span>{tag}</span>
                     <i
-                      className="bi-x-circle"
+                      className="bi-x-circle ms-1"
                       onClick={handleIconClick.bind(this, null, tag)}
                     ></i>
                   </span>

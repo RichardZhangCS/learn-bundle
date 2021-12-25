@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String,
   },
+  posts: [{ type: Schema.Types.ObjectId, ref: "Post", required: false }],
 });
 
 module.exports = mongoose.model("User", UserSchema);

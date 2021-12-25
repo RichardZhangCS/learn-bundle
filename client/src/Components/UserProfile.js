@@ -4,6 +4,7 @@ import { useContext, useEffect, useState, useRef } from "react";
 import defaultAvatar from "../default_profile_picture.jpg";
 import UserContext from "./../util/UserContext";
 import CropperModal from "./CropperModal";
+import PostCard from "./PostCard";
 function UserProfile({ ownUser }) {
   const [user, getUserFromServer] = useContext(UserContext);
   const routeParams = useParams();
@@ -216,6 +217,10 @@ function UserProfile({ ownUser }) {
                         onClick={() => {
                           setEditUsernameMode(false);
                         }}
+                        style={{
+                          borderTopRightRadius: "4px",
+                          borderBottomRightRadius: "4px",
+                        }}
                       >
                         <i className="bi bi-x-circle"></i>
                       </Button>
@@ -234,8 +239,17 @@ function UserProfile({ ownUser }) {
               </>
             )}
           </Container>
-          <Container className="p-3 bg-light post-view-container my-2 border rounded">
+          <Container className="p-3 bg-light post-view-container mt-2 mb-4 border rounded">
             <h5>Posts</h5>
+            {userOfProfile.posts && userOfProfile.posts.length > 0 ? (
+              <div className="post-container-user-profile container-fluid">
+                {userOfProfile.posts.map((post, index) => (
+                  <PostCard post={post} index={index} key={index}></PostCard>
+                ))}
+              </div>
+            ) : (
+              <o className="lead">No posts available</o>
+            )}
           </Container>
         </>
       ) : (

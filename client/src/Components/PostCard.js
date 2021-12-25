@@ -1,6 +1,7 @@
 import { Badge } from "react-bootstrap";
 import { Card } from "react-bootstrap";
 import { stringToColour, pickTextColorBasedOnBgColor } from "../util/TextColor";
+import defaultPostImg from "../default_post_picture.jpg";
 function PostCard(props) {
   let post = props.post;
   let index = props.index;
@@ -16,7 +17,11 @@ function PostCard(props) {
     >
       <Card.Img
         variant="top"
-        src={`data:image/${post.image.contentType};base64,${post.image.dataBase64Encoded}`}
+        src={
+          post.image
+            ? `data:image/${post.image.contentType};base64,${post.image.dataBase64Encoded}`
+            : defaultPostImg
+        }
       />
       <Card.Body>
         <Card.Title>{post.title}</Card.Title>

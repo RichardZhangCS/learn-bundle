@@ -32,8 +32,8 @@ function Header() {
                 {user && (
                   <Nav.Link href={`/users/me/view`}>My Profile</Nav.Link>
                 )}
-                <Nav.Link href={user ? "/account" : "/signin"}>
-                  {user ? "Account" : "Sign In"}
+                <Nav.Link href={user ? "/settings" : "/signin"}>
+                  {user ? "Settings" : "Sign In"}
                 </Nav.Link>
                 <Nav.Link onClick={handleClick.bind(this)}>
                   {user ? "Sign Out" : "Register"}

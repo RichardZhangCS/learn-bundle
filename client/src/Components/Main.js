@@ -5,6 +5,7 @@ import { Container } from "react-bootstrap";
 import { Spinner } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import PostCard from "./PostCard";
+
 function Main() {
   const [posts, setPosts] = useState(null);
   const [category, setCategory] = useState(null);

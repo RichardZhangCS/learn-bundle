@@ -1,16 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Button, Form, Spinner } from "react-bootstrap";
 import { useParams } from "react-router";
 import { Container } from "react-bootstrap";
 import defaultAvatar from "../default_profile_picture.jpg";
+import UserContext from "../util/UserContext";
 
 function PostView() {
+  const [user] = useContext(UserContext);
   const { postid } = useParams();
   const [post, setPost] = useState(undefined);
   const [validated, setValidated] = useState(false);
   const [loading, setLoading] = useState(false);
 
   let paragraphs = post ? post.description.split("\n") : undefined;
+  const isEditable = () => {
+    return;
+  };
 
   useEffect(() => {
     async function getPostFromId() {

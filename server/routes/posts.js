@@ -10,7 +10,9 @@ router.post("/", PostController.post_add);
 router.get("/", async (req, res, next) => {
   var results = await Post.find({}).populate("user").lean();
   for (var post of results) {
-    post.image.dataBase64Encoded = post.image.data.toString("base64");
+    if (post.image) {
+      post.image.dataBase64Encoded = post.image.data.toString("base64");
+    }
     post.submission_date_formatted = DateTime.fromJSDate(
       post.submission_date
     ).toLocaleString(DateTime.DATE_MED);
