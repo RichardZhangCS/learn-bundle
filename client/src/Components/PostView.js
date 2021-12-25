@@ -70,11 +70,13 @@ function PostView() {
             {post.user.username}
           </a>
         </h4>
-        <img
-          className="post-article-image me-2"
-          src={`data:image/${post.image.contentType};base64,${post.image.dataBase64Encoded}`}
-          alt={"Visualization for " + post.title}
-        ></img>
+        {post.image && (
+          <img
+            className="post-article-image me-2"
+            src={`data:image/${post.image.contentType};base64,${post.image.dataBase64Encoded}`}
+            alt={"Visualization for " + post.title}
+          ></img>
+        )}
 
         <p>{post.submission_date_formatted}</p>
         <a href={post.link} target="_blank" rel="noopener noreferrer">

@@ -36,7 +36,7 @@ function Preview() {
             <Button
               variant="secondary"
               className="static-button float-start w-50"
-              href={user ? "/accountSettings" : "/signin"}
+              href={user ? "/settings" : "/signin"}
             >
               {user ? "Account Settings" : "Sign In"}
             </Button>

@@ -2,9 +2,13 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 import { Form } from "react-bootstrap";
+import noImage from "../no-image.png";
 function PostForm() {
   const [validated, setValidated] = useState(false);
   const [tags, setTags] = useState([]);
+  const [currentImage, setCurrentImage] = useState(noImage);
+
+  const calculatedWidth = "calc(100% - 300px)";
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -61,13 +65,23 @@ function PostForm() {
     <section className="post-form-section">
       <Container className="py-3">
         <h2 className="text-center">Create a new tutorial post</h2>
+        <img
+          src={currentImage}
+          alt="Post visualization"
+          style={{
+            width: "300px",
+            height: "100%",
+            verticalAlign: "top",
+          }}
+        />
         <Form
           noValidate
           validated={validated}
           onSubmit={handleSubmit.bind(this)}
           onKeyPress={handleKeyDown.bind(this)}
+          style={{ width: calculatedWidth, display: "inline-block" }}
         >
-          <Form.Group className="py-2">
+          <Form.Group className="p-2">
             <Form.Label>Title</Form.Label>
             <Form.Control
               type="text"
@@ -79,7 +93,7 @@ function PostForm() {
               Title cannot be empty
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group className="py-2">
+          <Form.Group className="p-2">
             <Form.Label>Link</Form.Label>
             <Form.Control
               type="url"
@@ -91,7 +105,7 @@ function PostForm() {
               Must provide a valid url
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group className="py-2">
+          <Form.Group className="p-2">
             <Form.Label>Prerequisties (optional but recommended)</Form.Label>
             <Form.Control
               type="text"
@@ -100,7 +114,7 @@ function PostForm() {
               placeholder="Enter necessary prerequisites here"
             />
           </Form.Group>
-          <Form.Group className="py-2">
+          <Form.Group className="p-2">
             <Form.Label>Description</Form.Label>
             <Form.Control
               as="textarea"
@@ -116,24 +130,10 @@ function PostForm() {
 
           <Row>
             <Col>
-              <Form.Label className="py-2">Selected Tags</Form.Label>
-              {tags.map((tag, index) => {
-                return (
-                  <span key={index} className="tag label label-info">
-                    <span>{tag}</span>
-                    <i
-                      className="bi-x-circle ms-1"
-                      onClick={handleIconClick.bind(this, null, tag)}
-                    ></i>
-                  </span>
-                );
-              })}
-            </Col>
-            <Col>
-              <Form.Label htmlFor="tagDataList" className="py-2">
+              <Form.Label htmlFor="tagDataList" className="p-2">
                 Tag Search
               </Form.Label>
-              <Form.Group>
+              <Form.Group className="ps-2">
                 <Form.Control
                   list="datalistOptions"
                   id="tagDataList"
@@ -150,16 +150,36 @@ function PostForm() {
                 </datalist>
               </Form.Group>
             </Col>
+            <Col>
+              <Form.Label className="p-2">Selected Tags</Form.Label>
+              {tags.map((tag, index) => {
+                return (
+                  <span key={index} className="tag label label-info">
+                    <span>{tag}</span>
+                    <i
+                      className="bi-x-circle ms-1"
+                      onClick={handleIconClick.bind(this, null, tag)}
+                    ></i>
+                  </span>
+                );
+              })}
+            </Col>
           </Row>
           <Row>
             <Col>
-              <Form.Group className="py-2">
+              <Form.Group className="p-2">
                 <Form.Label>Image</Form.Label>
                 <Form.Control
                   type="file"
                   name="image"
                   placeholder="Place a cool image here"
                   accept=".jpg, .jpeg, .png"
+                  onChange={(e) => {
+                    const newImage = e.target.files[0]
+                      ? URL.createObjectURL(e.target.files[0])
+                      : noImage;
+                    setCurrentImage(newImage);
+                  }}
                 />
                 <Form.Control.Feedback type="invalid">
                   Image must be a jpg, jpeg, or png

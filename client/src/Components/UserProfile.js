@@ -96,11 +96,6 @@ function UserProfile({ ownUser }) {
     setValidated(true);
   };
 
-  const handleAvatarChange = (e) => {
-    setShowCropper(true);
-    newAvatarCandidate.current = e.target.files[0];
-  };
-
   useEffect(() => {
     if (routeParams.username) {
       async function getUserByNameFromAPI() {
@@ -124,7 +119,7 @@ function UserProfile({ ownUser }) {
       }
       getCurrentUserFromAPI();
     }
-  }, [routeParams, user]);
+  }, [routeParams, user, ownUser]);
   return (
     <section className="user-profile">
       {userOfProfile ? (
@@ -163,7 +158,10 @@ function UserProfile({ ownUser }) {
                   cursor: "pointer",
                 }}
                 accept=".jpg, .jpeg, .png"
-                onChange={handleAvatarChange.bind(this)}
+                onChange={(e) => {
+                  setShowCropper(true);
+                  newAvatarCandidate.current = e.target.files[0];
+                }}
               />
             </div>
             {!editUsernameMode ? (

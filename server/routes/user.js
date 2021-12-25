@@ -26,7 +26,6 @@ router.get("/name/:username", async function (req, res, next) {
   if (!user.username) {
     res.status(404).send("User is not found");
   }
-  console.log(user.posts);
   if (user.avatar)
     user.avatar.dataBase64Encoded = user.avatar.data.toString("base64");
   if (user.posts) {

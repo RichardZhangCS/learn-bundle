@@ -54,7 +54,7 @@ exports.post_update = [
   upload.single("image"),
   async (req, res, next) => {
     var newPost = new Post({
-      _id: req.body.id,
+      _id: req.params.id,
       title: req.body.title,
       user: req.user,
       link: req.body.link,

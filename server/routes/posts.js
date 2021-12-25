@@ -28,7 +28,9 @@ router.get("/:id", async (req, res, next) => {
       populate: { path: "user" },
     })
     .lean();
-  post.image.dataBase64Encoded = post.image.data.toString("base64");
+  if (post.image) {
+    post.image.dataBase64Encoded = post.image.data.toString("base64");
+  }
   post.submission_date_formatted = DateTime.fromJSDate(
     post.submission_date
   ).toLocaleString(DateTime.DATETIME_MED);
@@ -44,7 +46,7 @@ router.get("/:id", async (req, res, next) => {
   res.send(post);
 });
 
-router.put("/", PostController.post_update);
+router.put("/:id", PostController.post_update);
 
 router.post("/:id/comments", async (req, res, next) => {
   try {
