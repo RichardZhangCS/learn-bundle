@@ -50,6 +50,8 @@ function App() {
 
           <Route exact path="/post/add" element={<Postpage />} />
 
+          <Route exact path="/posts/:postid/edit" element={<Postpage />} />
+
           <Route exact path="/register" element={<Register />} />
 
           <Route exact path="/signin" element={<SignIn />} />

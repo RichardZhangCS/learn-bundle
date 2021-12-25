@@ -58,7 +58,7 @@ function Main() {
             ></Categories>
           </Col>
           <div className="d-inline-flex flex-column align-items-center w-auto">
-            <div className="p-4 bg-light d-flex justify-content-center align-items-center rounded">
+            <div className="p-4 bg-light d-flex justify-content-center align-items-center rounded border">
               <InputGroup>
                 {/* <div className="form-floating"> */}
                 <Form.Control
@@ -75,7 +75,7 @@ function Main() {
             </div>
             <Row>
               {!posts ? (
-                <div className="spinner-container">
+                <div className="mt-4 spinner-container">
                   <Spinner
                     className="post-loading-spinner"
                     animation="border"

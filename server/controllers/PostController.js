@@ -53,8 +53,8 @@ exports.post_add = [
 exports.post_update = [
   upload.single("image"),
   async (req, res, next) => {
-    var newPost = new Post({
-      _id: req.params.id,
+    console.log(req.file);
+    var newPost = {
       title: req.body.title,
       user: req.user,
       link: req.body.link,
@@ -69,10 +69,13 @@ exports.post_update = [
             ),
             contentType: req.file.mimetype,
           }
-        : null,
-    });
+        : undefined,
+    };
+    if (!req.file) {
+      newPost.$unset = { image: 1 };
+    }
 
-    var result = await Post.findByIdAndUpdate(req.body.id, newPost, {});
+    var result = await Post.findByIdAndUpdate(req.params.id, newPost, {});
     if (result) {
       res.send("Post found and updated");
     } else {

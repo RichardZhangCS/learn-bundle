@@ -1,5 +1,12 @@
 import { useParams } from "react-router";
-import { Container, Form, Spinner, InputGroup, Button } from "react-bootstrap";
+import {
+  Container,
+  Form,
+  Spinner,
+  InputGroup,
+  Button,
+  Card,
+} from "react-bootstrap";
 import { useContext, useEffect, useState, useRef } from "react";
 import defaultAvatar from "../default_profile_picture.jpg";
 import UserContext from "./../util/UserContext";
@@ -239,14 +246,26 @@ function UserProfile({ ownUser }) {
           </Container>
           <Container className="p-3 bg-light post-view-container mt-2 mb-4 border rounded">
             <h5>Posts</h5>
-            {userOfProfile.posts && userOfProfile.posts.length > 0 ? (
-              <div className="post-container-user-profile container-fluid">
-                {userOfProfile.posts.map((post, index) => (
+            <div className="post-container-user-profile container-fluid">
+              {userOfProfile.posts &&
+                userOfProfile.posts.length > 0 &&
+                userOfProfile.posts.map((post, index) => (
                   <PostCard post={post} index={index} key={index}></PostCard>
                 ))}
-              </div>
-            ) : (
-              <o className="lead">No posts available</o>
+              {isEditable() && (
+                <Card
+                  className="m-2 post-card pt-2 d-flex align-items-center justify-content-center text-center"
+                  style={{ width: "18rem" }}
+                  onClick={(e) => {
+                    window.location = "/post/add";
+                  }}
+                >
+                  <h4>Click here to create a new post</h4>
+                </Card>
+              )}
+            </div>
+            {(!userOfProfile.posts || !userOfProfile.posts.length === 0) && (
+              <p className="lead">No posts available</p>
             )}
           </Container>
         </>

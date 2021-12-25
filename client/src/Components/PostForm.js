@@ -1,14 +1,34 @@
+import { useRef } from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, InputGroup } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import noImage from "../no-image.png";
-function PostForm() {
+function PostForm({ post }) {
+  // if post is defined, then this component is in edit mode
   const [validated, setValidated] = useState(false);
-  const [tags, setTags] = useState([]);
-  const [currentImage, setCurrentImage] = useState(noImage);
+  const [tags, setTags] = useState(post ? post.tags : []);
+  const [currentImage, setCurrentImage] = useState(
+    post && post.image
+      ? `data:${post.image.contentType};base64,${post.image.dataBase64Encoded}`
+      : noImage
+  );
 
-  const calculatedWidth = "calc(100% - 300px)";
+  const inputFileRef = useRef();
+
+  function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: mime });
+  }
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -39,13 +59,24 @@ function PostForm() {
   const submitNewPost = async (form) => {
     var formData = new FormData(form);
     formData.append("tags", tags);
-    const response = await fetch("/posts/", {
-      method: "POST",
+    if (post) {
+      if (
+        post.image &&
+        currentImage ===
+          `data:${post.image.contentType};base64,${post.image.dataBase64Encoded}`
+      ) {
+        formData.set("image", dataURLtoFile(currentImage));
+      }
+    }
+    const route = post ? `/posts/${post._id}/` : "/posts/";
+    const response = await fetch(route, {
+      method: post ? "PUT" : "POST",
       body: formData,
       credentials: "include",
     });
     if (response.status === 200) {
-      window.location.assign("/");
+      const resultPage = !post ? "/" : `/posts/${post._id}/view`;
+      window.location.assign(resultPage);
     }
   };
 
@@ -63,8 +94,10 @@ function PostForm() {
 
   return (
     <section className="post-form-section">
-      <Container className="py-3">
-        <h2 className="text-center">Create a new tutorial post</h2>
+      <Container className="py-3 my-5 border rounded bg-light border">
+        <h2 className="text-center">
+          {post ? `Editing "${post.title}"` : "Create a new tutorial post"}
+        </h2>
         <img
           src={currentImage}
           alt="Post visualization"
@@ -79,7 +112,7 @@ function PostForm() {
           validated={validated}
           onSubmit={handleSubmit.bind(this)}
           onKeyPress={handleKeyDown.bind(this)}
-          style={{ width: calculatedWidth, display: "inline-block" }}
+          className="post-form"
         >
           <Form.Group className="p-2">
             <Form.Label>Title</Form.Label>
@@ -88,6 +121,7 @@ function PostForm() {
               name="title"
               placeholder="Enter a cool title here"
               required="true"
+              defaultValue={post ? post.title : ""}
             />
             <Form.Control.Feedback type="invalid">
               Title cannot be empty
@@ -100,6 +134,7 @@ function PostForm() {
               name="link"
               placeholder="Provide the url to the resource here"
               required="true"
+              defaultValue={post ? post.link : ""}
             />
             <Form.Control.Feedback type="invalid">
               Must provide a valid url
@@ -110,8 +145,8 @@ function PostForm() {
             <Form.Control
               type="text"
               name="prereqs"
-              defaultValue="None"
               placeholder="Enter necessary prerequisites here"
+              defaultValue={post ? post.prereqs : "None"}
             />
           </Form.Group>
           <Form.Group className="p-2">
@@ -122,6 +157,7 @@ function PostForm() {
               rows={3}
               placeholder="Enter a cool description"
               required="true"
+              defaultValue={post ? post.description : ""}
             />
             <Form.Control.Feedback type="invalid">
               Description cannot be empty
@@ -168,26 +204,44 @@ function PostForm() {
           <Row>
             <Col>
               <Form.Group className="p-2">
-                <Form.Label>Image</Form.Label>
-                <Form.Control
-                  type="file"
-                  name="image"
-                  placeholder="Place a cool image here"
-                  accept=".jpg, .jpeg, .png"
-                  onChange={(e) => {
-                    const newImage = e.target.files[0]
-                      ? URL.createObjectURL(e.target.files[0])
-                      : noImage;
-                    setCurrentImage(newImage);
-                  }}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Image must be a jpg, jpeg, or png
-                </Form.Control.Feedback>
+                <Form.Label>New Image</Form.Label>
+                <InputGroup>
+                  <Form.Control
+                    type="file"
+                    name="image"
+                    ref={inputFileRef}
+                    placeholder="Place a cool image here"
+                    accept=".jpg, .jpeg, .png"
+                    onChange={(e) => {
+                      let newImage = e.target.files[0]
+                        ? URL.createObjectURL(e.target.files[0])
+                        : noImage;
+                      if (post && post.image && !e.target.files[0]) {
+                        newImage = `data:${post.image.contentType};base64,${post.image.dataBase64Encoded}`;
+                      }
+                      setCurrentImage(newImage);
+                    }}
+                  />
+                  <Button
+                    style={{
+                      borderTopRightRadius: "4px",
+                      borderBottomRightRadius: "4px",
+                    }}
+                    onClick={(e) => {
+                      inputFileRef.current.value = "";
+                      setCurrentImage(noImage);
+                    }}
+                  >
+                    Clear
+                  </Button>
+                  <Form.Control.Feedback type="invalid">
+                    Image must be a jpg, jpeg, or png
+                  </Form.Control.Feedback>
+                </InputGroup>
               </Form.Group>
             </Col>
-            <Col className="position-relative">
-              <Button type="submit" className="post-add-btn w-75">
+            <Col className="position-relative d-flex align-items-end justify-content-end pe-3">
+              <Button type="submit" className="w-75 mb-2">
                 Submit
               </Button>
             </Col>

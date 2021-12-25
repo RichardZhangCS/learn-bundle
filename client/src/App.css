@@ -225,3 +225,17 @@ h4.editable:hover i {
   justify-items: center;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
+.post-form {
+  width: calc(100% - 300px);
+  display: inline-block;
+}
+.post-form-section::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(post_add_background.jpg);
+  filter: blur(5px);
+  z-index: -10;
+}

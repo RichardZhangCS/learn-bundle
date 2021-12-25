@@ -14,7 +14,7 @@ function PostView() {
 
   let paragraphs = post ? post.description.split("\n") : undefined;
   const isEditable = () => {
-    return;
+    return user._id === post.user._id;
   };
 
   useEffect(() => {
@@ -63,13 +63,27 @@ function PostView() {
   return (
     <section className="post-view">
       <Container className="p-3 bg-light post-view-container mt-5 border rounded">
+        {isEditable() && (
+          <Button
+            variant="info"
+            className="display-inline float-end"
+            onClick={() => {
+              window.location = `/posts/${postid}/edit`;
+            }}
+          >
+            Edit this post
+            <i className="bi bi-pencil ms-2"></i>
+          </Button>
+        )}
         <h2>{post.title}</h2>
+
         <h4 className="text-muted">
           By{" "}
           <a href={`/users/name/${post.user.username}/view`}>
             {post.user.username}
           </a>
         </h4>
+
         {post.image && (
           <img
             className="post-article-image me-2"
