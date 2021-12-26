@@ -9,6 +9,7 @@ import UserContext from "./util/UserContext";
 import { useEffect, useState } from "react";
 import PostViewPage from "./Pages/PostViewPage";
 import UserProfilePage from "./Pages/UserProfilePage";
+import NotFoundPage from "./Pages/NotFoundPage";
 
 function App() {
   /**
@@ -76,6 +77,8 @@ function App() {
             element={<UserProfilePage />}
             ownUser={true}
           />
+
+          <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </Router>
     </UserContext.Provider>

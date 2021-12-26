@@ -239,3 +239,21 @@ h4.editable:hover i {
   filter: blur(5px);
   z-index: -10;
 }
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+}
+.not-found-container::before {
+  content: "";
+  position: fixed;
+  background-image: url(not_found_background.jpg);
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  z-index: -25;
+}
