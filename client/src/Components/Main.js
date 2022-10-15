@@ -5,9 +5,10 @@ import { Container } from "react-bootstrap";
 import { Spinner } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import PostCard from "./PostCard";
+import usePosts from "../Hooks/usePosts";
 
 function Main() {
-  const [posts, setPosts] = useState(null);
+  const {data: posts, isLoading, isError} = usePosts();
   const [category, setCategory] = useState(null);
 
   let categoryFilterer = (post) => {
@@ -30,22 +31,6 @@ function Main() {
       setCategory(null);
     }
   };
-
-  useEffect(() => {
-    const getPostsFromApi = async () => {
-      try {
-        let res = await fetch("http://localhost:9000/posts", {
-          credentials: "include",
-          withCredentials: true,
-        });
-        let json = await res.json();
-        setPosts(json);
-      } catch (e) {
-        setPosts([]);
-      }
-    };
-    getPostsFromApi();
-  }, []);
 
   return (
     <section className="main">
